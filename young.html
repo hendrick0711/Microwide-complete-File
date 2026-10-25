@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="purple">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#A970FF" />
+<title>Microwide Kids — Learn Namibian Languages</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ SHARED & LANDING THEMES ============ */
+  :root{
+    --white:#ffffff;
+    --coral:#FF6B6B;
+    --teal:#22C1A4;
+    --night:#0E2A47;
+    --night-2:#12395C;
+    --gold:#F2A93B;
+    --gold-deep:#D9861A;
+    --terra:#C4552D;
+    --violet:#6C4AB6;
+    --ink:#1C2B39;
+    --ink-soft:#4B6072;
+    --card:#FFFDF7;
+    --line:rgba(14,42,71,.10);
+    --shadow:0 18px 40px -22px rgba(14,42,71,.55);
+  }
+
+  [data-theme="purple"]{
+    --bg:#A970FF;  --accent:#B57BFF; --soft:#EAD9FF; --deep:#6B3FA0;
+    --ink:#2A0A3A; --ink-soft:#4A2A6A; --ink-faint:#6B4A9A;
+    --pill2:#D9C2FF; --banner:#C9A0FF;
+    --hoverA:#8A4FFF; --hoverB:#6B3FA0; --btnHover:#C9A0FF;
+  }
+  [data-theme="pink"]{
+    --bg:#FF9ED2;  --accent:#FFB8DE; --soft:#FFE3F2; --deep:#C2408A;
+    --ink:#3A0A28; --ink-soft:#6B2A50; --ink-faint:#9A4A78;
+    --pill2:#FFD1E8; --banner:#FFB8DE;
+    --hoverA:#FF7ABF; --hoverB:#C2408A; --btnHover:#FFD1E8;
+  }
+  [data-theme="blue"]{
+    --bg:#7CC7FF;  --accent:#9AD9FF; --soft:#DCF0FF; --deep:#2A6FA8;
+    --ink:#0A2233; --ink-soft:#1E4A68; --ink-faint:#3A6E92;
+    --pill2:#C4E6FF; --banner:#9AD9FF;
+    --hoverA:#4FA8E8; --hoverB:#2A6FA8; --btnHover:#C4E6FF;
+  }
+  [data-theme="yellow"]{
+    --bg:#FFD93D;  --accent:#FFE566; --soft:#FFF6CC; --deep:#C79A00;
+    --ink:#3A2E00; --ink-soft:#5B4A10; --ink-faint:#7A6A20;
+    --pill2:#FFF0A8; --banner:#FFE566;
+    --hoverA:#F2B705; --hoverB:#C79A00; --btnHover:#FFF0A8;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family:"Fredoka", "Baloo 2", system-ui, -apple-system, "Segoe UI", sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;
+    overflow-x:hidden;
+    transition:background-color .35s ease, color .35s ease;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(circle at 8% 12%,  rgba(255,255,255,.55) 0%, transparent 34%),
+      radial-gradient(circle at 93% 10%, rgba(255,255,255,.35) 0%, transparent 28%),
+      radial-gradient(circle at 88% 82%, var(--soft) 0%, transparent 34%),
+      radial-gradient(circle at 4% 88%,  rgba(255,255,255,.45) 0%, transparent 30%);
+    transition:background .35s ease;
+  }
+
+  button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+  .wrap{ width:min(1100px, 92vw); margin-inline:auto; }
+
+  /* ================= TOP BAR ================= */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(8px);
+    border-bottom:4px solid var(--deep);
+    transition:border-color .35s ease;
+  }
+  .topbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; padding:12px 18px;
+  }
+  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); cursor:pointer; }
+  .brand-badge{
+    width:52px; height:52px; border-radius:50%;
+    background:var(--accent);
+    display:grid; place-items:center;
+    font-size:26px;
+    border:4px solid var(--ink);
+    box-shadow:0 4px 0 var(--ink);
+    animation:bob 3s ease-in-out infinite;
+    transition:background-color .35s ease;
+  }
+  @keyframes bob{ 50%{ transform:translateY(-4px); } }
+
+  .brand-text{ display:flex; flex-direction:column; line-height:1.05; }
+  .brand-text strong{ font-size:1.15rem; letter-spacing:.3px; }
+  .brand-text small{ font-size:.72rem; color:var(--deep); font-weight:500; transition:color .35s ease; }
+
+  .top-right{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; justify-content:flex-end; }
+
+  .nav{ display:flex; gap:8px; flex-wrap:wrap; }
+  .nav a, .nav button{
+    text-decoration:none; color:var(--ink); font-weight:600; font-size:.92rem;
+    padding:8px 16px; border-radius:999px;
+    background:var(--soft);
+    border:2px solid transparent;
+    transition:.2s; cursor:pointer;
+  }
+  .nav a:hover, .nav button:hover{ background:var(--accent); border-color:var(--ink); }
+
+  /* ---------- THEME SWATCHES ---------- */
+  .theme-picker{
+    display:flex; align-items:center; gap:7px;
+    background:var(--soft);
+    border:2.5px solid var(--ink);
+    border-radius:999px;
+    padding:5px 10px;
+    transition:background-color .35s ease, border-color .35s ease;
+  }
+  .theme-picker .lbl{
+    font-size:.66rem; font-weight:700; letter-spacing:1px;
+    text-transform:uppercase; opacity:.65; margin-right:2px;
+  }
+  .swatch{
+    width:24px; height:24px; border-radius:50%;
+    border:2.5px solid var(--ink);
+    background:var(--sw);
+    cursor:pointer; padding:0;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .swatch:hover{ transform:scale(1.15); }
+  .swatch[aria-pressed="true"]{
+    box-shadow:0 0 0 3px var(--white), 0 0 0 5px var(--ink);
+    transform:scale(1.1);
+  }
+
+  /* ================= LANDING HERO ================= */
+  .hero{
+    display:grid; grid-template-columns:1.05fr .95fr;
+    gap:44px; align-items:center;
+    padding:56px 0 46px;
+  }
+  .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--white);
+    border:3px solid var(--ink);
+    border-radius:999px;
+    padding:6px 18px;
+    font-weight:600; font-size:.85rem;
+    box-shadow:0 4px 0 var(--deep);
+    margin-bottom:18px;
+    transition:box-shadow .35s ease;
+  }
+  h1{
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    line-height:1.03; font-weight:700; letter-spacing:-1px;
+    margin-bottom:16px;
+  }
+  h1 .hl{
+    background:linear-gradient(180deg, transparent 58%, var(--white) 58%);
+    padding:0 6px; border-radius:6px;
+  }
+  .hero p.sub{
+    font-size:1.05rem; line-height:1.65;
+    color:var(--ink-soft); max-width:46ch; margin-bottom:22px;
+    transition:color .35s ease;
+  }
+  .greet-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:28px; }
+  .greet-pill{
+    display:flex; flex-direction:column; gap:2px;
+    padding:12px 22px; border-radius:18px;
+    border:3px solid var(--ink);
+    font-weight:700; font-size:1.15rem;
+    box-shadow:0 5px 0 var(--deep);
+    transition:transform .2s, background-color .35s ease, box-shadow .35s ease;
+  }
+  .greet-pill:hover{ transform:translateY(-4px) rotate(-1.5deg); }
+  .greet-pill small{
+    font-size:.68rem; font-weight:600; letter-spacing:.8px;
+    text-transform:uppercase; opacity:.75;
+  }
+  .greet-pill.ruk  { background:var(--soft); }
+  .greet-pill.oshi { background:var(--pill2); }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--accent); color:var(--ink); text-decoration:none;
+    font-family:inherit; font-weight:700; font-size:1.05rem;
+    padding:16px 32px; border-radius:999px;
+    border:4px solid var(--ink);
+    box-shadow:0 6px 0 var(--ink);
+    cursor:pointer;
+    transition:transform .15s, box-shadow .15s, background-color .35s ease;
+  }
+  .btn:hover{ transform:translateY(-3px); box-shadow:0 9px 0 var(--ink); background:var(--btnHover); }
+  .btn:active{ transform:translateY(3px); box-shadow:0 2px 0 var(--ink); }
+
+  .hero-art{
+    position:relative;
+    display:grid; place-items:end center;
+    background:var(--soft);
+    border:4px solid var(--ink);
+    border-radius:44px;
+    padding:26px 10px 0;
+    box-shadow:0 10px 0 var(--deep);
+    overflow:hidden;
+    transition:background-color .35s ease, box-shadow .35s ease;
+  }
+  .hero-art::after{
+    content:""; position:absolute; width:160px; height:160px; border-radius:50%;
+    background:var(--white); top:-50px; right:-50px; opacity:.7;
+  }
+  .hero-art::before{
+    content:""; position:absolute; width:90px; height:90px; border-radius:50%;
+    background:var(--accent); bottom:-40px; left:-30px; opacity:.35;
+  }
+  .kids{ display:flex; align-items:flex-end; gap:4px; position:relative; z-index:1; }
+  .kid{
+    width:110px; height:auto; display:block;
+    filter:drop-shadow(0 6px 0 rgba(0,0,0,.08));
+    animation:float 3.6s ease-in-out infinite;
+  }
+  .kid:nth-child(2){ width:132px; animation-delay:.35s; }
+  .kid:nth-child(3){ animation-delay:.7s; }
+  @keyframes float{ 50%{ transform:translateY(-9px); } }
+
+  .cat-hello{
+    display:inline-block; width:clamp(58px, 7vw, 88px); height:auto;
+    vertical-align:middle; margin-left:6px; animation:bob 3.6s ease-in-out infinite;
+    filter:drop-shadow(0 3px 0 rgba(0,0,0,.10));
+  }
+  .hello-banner .cat-hello{ width:clamp(76px, 9vw, 120px); margin-left:10px; }
+
+  .section{ padding:54px 0; }
+  .section-head{ text-align:center; margin-bottom:36px; }
+  .section-head h2{ font-size:clamp(1.8rem, 4vw, 2.7rem); margin-bottom:10px; }
+  .section-head p{ color:var(--ink-soft); font-size:1.02rem; }
+
+  .lang-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr);
+    gap:26px; max-width:840px; margin-inline:auto;
+  }
+  .lang-card{
+    position:relative; text-align:left; cursor:pointer;
+    font-family:inherit; color:var(--ink);
+    background:var(--white); border:4px solid var(--ink);
+    border-radius:30px; padding:30px 26px;
+    box-shadow:0 8px 0 var(--deep);
+    transition:transform .18s, box-shadow .18s, background-color .35s ease;
+  }
+  .lang-card:hover{ transform:translateY(-6px); }
+  .lang-card .flag{ font-size:2.1rem; display:block; margin-bottom:8px; }
+  .lang-card h3{ font-size:1.7rem; margin-bottom:2px; }
+  .lang-card .region{ font-size:.85rem; color:var(--ink-faint); font-weight:600; margin-bottom:16px; }
+  .lang-card .hello{
+    display:inline-block; background:var(--soft); border-radius:14px;
+    padding:8px 14px; font-weight:700; font-size:.98rem;
+  }
+  .lang-card .tick{
+    position:absolute; top:16px; right:16px; width:36px; height:36px;
+    border-radius:50%; background:var(--accent); border:3px solid var(--ink);
+    display:grid; place-items:center; font-weight:800; font-size:1rem;
+    opacity:0; transform:scale(.4); transition:.22s;
+  }
+  .lang-card.selected{ background:var(--soft); }
+  .lang-card.selected .tick{ opacity:1; transform:scale(1); }
+
+  .pick-msg{
+    display:none; max-width:840px; margin:26px auto 0; text-align:center;
+    background:var(--white); border:4px solid var(--ink); border-radius:22px;
+    padding:18px 24px; font-weight:600; font-size:1.05rem; box-shadow:0 6px 0 var(--ink);
+    animation:pop .3s ease;
+  }
+  .pick-msg.show{ display:block; }
+  @keyframes pop{ from{ transform:scale(.94); opacity:0; } to{ transform:scale(1); opacity:1; } }
+
+  .hello-banner{
+    background:var(--banner); border-top:4px solid var(--ink);
+    border-bottom:4px solid var(--ink); padding:50px 0; text-align:center;
+    transition:background-color .35s ease;
+  }
+  .hello-banner h2{ font-size:clamp(2.2rem, 7vw, 4.2rem); letter-spacing:-1.5px; line-height:1.05; }
+  .hello-banner p{ margin-top:10px; font-weight:500; color:var(--ink-soft); }
+  .hello-lines{ display:flex; justify-content:center; gap:22px; flex-wrap:wrap; margin-top:24px; }
+  .hello-line{
+    background:var(--white); border:3px solid var(--ink); border-radius:18px;
+    padding:12px 22px; font-weight:700; font-size:1.05rem; box-shadow:0 5px 0 rgba(0,0,0,.18);
+  }
+  .hello-line small{ display:block; font-size:.7rem; letter-spacing:.8px; text-transform:uppercase; opacity:.6; margin-top:2px; }
+
+  .activities-cta{ padding:56px 0 20px; }
+  .activities-card{
+    display:flex; align-items:center; justify-content:space-between; gap:26px; flex-wrap:wrap;
+    background:var(--white); border:4px solid var(--ink); border-radius:36px;
+    padding:34px 38px; box-shadow:0 10px 0 var(--deep);
+  }
+  .activities-card h2{ font-size:clamp(1.6rem, 3.4vw, 2.2rem); margin-bottom:6px; }
+  .activities-card p{ color:var(--ink-soft); font-size:1rem; max-width:46ch; }
+
+  footer{ padding:30px 0 44px; text-align:center; color:var(--ink-soft); font-size:.92rem; }
+  footer strong{ color:var(--ink); }
+  .foot-dots{ font-size:1.1rem; letter-spacing:6px; margin-bottom:10px; }
+
+  /* ================= APP SCREENS STYLING ================= */
+  .app-wrap { max-width:1080px; margin:0 auto; padding:16px 18px 60px; }
+  
+  .pill{
+    display:inline-flex; align-items:center; gap:7px; height:42px; padding:0 15px; border-radius:999px;
+    background:#fff; border:1px solid var(--line); font-weight:800; color:var(--night); font-size:15px;
+    box-shadow:0 8px 18px -14px rgba(14,42,71,.7);
+  }
+  .icon-btn{ width:44px; height:44px; border-radius:14px; display:grid; place-items:center; font-size:19px; background:#fff; border:1px solid var(--line); box-shadow:0 8px 18px -14px rgba(14,42,71,.7); cursor:pointer;}
+  .icon-btn.hidden{display:none}
+  .star-ico{color:#F2A93B;filter:drop-shadow(0 2px 0 rgba(217,134,26,.5))}
+
+  /* AI Assistant Widget Bar */
+  .ai-buddy-bar{
+    background:linear-gradient(135deg, #1F8A70, #12395C);border-radius:20px;padding:14px 18px;color:#fff;
+    display:flex;align-items:center;gap:14px;margin-bottom:20px;box-shadow:var(--shadow);border:2px solid rgba(255,255,255,0.3);
+  }
+  .ai-avatar{font-size:36px;background:rgba(255,255,255,0.2);width:54px;height:54px;display:grid;place-items:center;border-radius:16px;}
+  .ai-info h4{margin:0 0 4px;font-size:16px;font-weight:900;}
+  .ai-info p{margin:0;font-size:13px;opacity:0.9;font-weight:700}
+  .ai-btn{margin-left:auto;background:#F2A93B;color:#3A2404;font-weight:900;padding:10px 16px;border-radius:12px;font-size:13px;box-shadow:0 4px 0 #B9700D;cursor:pointer}
+
+  /* AI Modal Dialog */
+  .ai-modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;display:grid;place-items:center;padding:16px}
+  .ai-modal.hidden{display:none}
+  .ai-content{background:#fff;border-radius:24px;width:100%;max-width:500px;padding:24px;box-shadow:0 20px 40px rgba(0,0,0,0.4);display:flex;flex-direction:column;gap:14px}
+  .ai-content h3{margin:0;color:var(--night);font-size:20px;font-weight:900}
+  .ai-chat-box{background:#f4f7fa;border-radius:16px;padding:14px;height:220px;overflow-y:auto;border:1px solid var(--line);font-size:14px;font-weight:700;color:var(--ink);display:flex;flex-direction:column;gap:10px}
+  .ai-msg{background:#fff;padding:10px 14px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,0.05);max-width:85%;line-height:1.4}
+  .ai-msg.user{background:#E0D3FF;align-self:flex-end}
+  .ai-input-row{display:flex;gap:8px}
+  .ai-input{flex:1;padding:12px 14px;border-radius:14px;border:1.5px solid var(--line);font-size:14px;font-weight:700;outline:none}
+  .ai-send{background:var(--night);color:#fff;padding:0 18px;border-radius:14px;font-weight:900;cursor:pointer}
+  .ai-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .ai-chip{background:#EAF4FB;border:1px solid #B0D4F1;color:#12395C;padding:6px 10px;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer}
+
+  /* Module Cards Grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{
+    position:relative;text-align:left;background:var(--card);border-radius:24px;padding:18px;
+    border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);overflow:hidden;
+    transition:transform .25s cubic-bezier(.2,.9,.3,1.3);display:flex;flex-direction:column;gap:10px;width:100%;cursor:pointer;
+  }
+  .card:hover{transform:translateY(-5px) scale(1.012)}
+  .blob{ width:68px; height:68px; border-radius:22px; display:grid; place-items:center; font-size:36px; box-shadow:inset 0 -4px 0 rgba(0,0,0,.08); }
+  .b-gold{background:linear-gradient(150deg,#FFE2A8,#F2A93B)}
+  .b-teal{background:linear-gradient(150deg,#B9EBDA,#1F8A70)}
+  .b-terra{background:linear-gradient(150deg,#FFCDB8,#C4552D)}
+  .b-blue{background:linear-gradient(150deg,#C3DBF5,#2E6EA6)}
+  .card h3{margin:0;font-size:20px;color:var(--night);font-weight:900}
+  .card p{margin:0;font-size:13px;color:#6D7F8D;font-weight:700}
+  .card .go{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:10px;border-top:1px dashed var(--line)}
+  .go span{font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--terra)}
+  .stars-mini{font-size:14px;letter-spacing:2px;color:#D9C9AE}
+  .stars-mini b{color:#F2A93B;font-weight:400}
+
+  .screen{animation:fadeUp .35s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .screen-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .screen-head h2{margin:0;font-size:clamp(18px,3.4vw,24px);color:var(--night);font-weight:900}
+  .rounds{display:flex;gap:5px;margin-left:auto}
+  .rounds i{width:9px;height:9px;border-radius:50%;background:rgba(14,42,71,.18);display:block;transition:background .2s}
+  .rounds i.on{background:var(--gold);transform:scale(1.25)}
+  .panel{background:var(--card);border-radius:28px;padding:22px;border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow)}
+
+  /* Lesson & flashcards */
+  .flash{text-align:center;padding:26px 20px 22px;position:relative;overflow:hidden}
+  .flash .word{font-size:clamp(34px,8vw,60px);font-weight:900;color:var(--night);line-height:1.1;margin:6px 0 2px}
+  .flash .en{font-size:clamp(15px,3vw,20px);font-weight:800;color:var(--terra);text-transform:uppercase}
+  .flash .art{font-size:clamp(46px,11vw,72px);line-height:1;margin-bottom:6px}
+  .spk{
+    display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:12px 20px;border-radius:999px;
+    background:linear-gradient(150deg,#2E6EA6,#12395C);color:#fff;font-weight:900;font-size:15px;cursor:pointer;
+  }
+  .lesson-nav{display:flex;align-items:center;gap:12px;justify-content:center;margin-top:16px}
+  .btn-app{
+    padding:14px 26px;border-radius:18px;font-weight:900;font-size:15px;
+    background:#fff;color:var(--night);border:1.5px solid var(--line);
+    box-shadow:0 6px 0 rgba(14,42,71,.12);cursor:pointer;
+  }
+  .btn-app.primary{background:linear-gradient(150deg,#F5B94F,#E08A16);color:#3A2404;border-color:rgba(255,255,255,.6);box-shadow:0 6px 0 #B9700D}
+
+  /* Train, count, memory & games */
+  .stage{display:flex;flex-direction:column;gap:16px}
+  .track{display:flex;gap:8px;overflow-x:auto;padding:16px 12px;border-radius:22px;background:linear-gradient(180deg,#EAF4FB,#DCEBF6);border:1.5px dashed rgba(46,110,166,.35)}
+  .car{flex:0 0 86px;min-height:88px;border-radius:16px;background:rgba(255,255,255,.6);border:2px dashed rgba(46,110,166,.3);display:grid;place-items:center;font-size:22px;color:#A9BDCC;font-weight:900;text-align:center;padding:6px}
+  .car.done{background:linear-gradient(160deg,#FFEFC9,#F7C766);border:2px solid #E0A02F;color:#5A3A05;font-size:13px}
+  .tray{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+  .chip{padding:12px 16px;border-radius:16px;background:#fff;border:1.5px solid var(--line);font-weight:900;color:var(--night);font-size:15px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+  .chip small{font-size:10px;text-transform:uppercase;color:#8B9BA8}
+  .hint{text-align:center;font-size:13px;font-weight:800;color:#5C7285;margin:0}
+
+  .q{text-align:center}
+  .q .prompt{font-size:14px;font-weight:900;text-transform:uppercase;color:#7B8C99;margin-bottom:12px}
+  .herd{font-size:clamp(28px,7.5vw,46px);line-height:1.25;letter-spacing:6px;margin-bottom:18px}
+  .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+  .opt{padding:18px 12px;border-radius:18px;background:#fff;border:1.5px solid var(--line);font-weight:900;color:var(--night);font-size:18px;cursor:pointer}
+  .big-word{font-size:clamp(30px,7vw,48px);font-weight:900;color:var(--night);text-align:center;margin:6px 0 4px}
+
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;max-width:520px;margin:0 auto}
+  .mem-card{aspect-ratio:1/1.12;perspective:800px;background:none;cursor:pointer}
+  .mem-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .45s}
+  .mem-card.up .mem-inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;border-radius:18px;display:grid;place-items:center;padding:6px;backface-visibility:hidden;text-align:center;box-shadow:0 8px 18px -14px rgba(14,42,71,.85)}
+  .back{background:linear-gradient(150deg,#2E6EA6,#12395C);font-size:30px;color:rgba(255,255,255,.5)}
+  .front{transform:rotateY(180deg);background:#fff;border:1.5px solid var(--line);font-weight:900;color:var(--night);font-size:15px}
+  .mem-card.matched .front{background:linear-gradient(150deg,#DFF6EC,#B7E6D4);border-color:#8FD3BA}
+
+  .story-list-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .story-card{background:var(--card);border-radius:20px;padding:16px;border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;cursor:pointer;text-align:left}
+  .story-thumb{font-size:36px;background:rgba(242,169,59,0.2);width:60px;height:60px;display:grid;place-items:center;border-radius:16px}
+  .story-art{font-size:clamp(52px,15vw,86px);text-align:center;line-height:1;margin-bottom:10px}
+  .story-text{font-size:clamp(17px,3.6vw,21px);line-height:1.55;color:#2A3B4A;text-align:center;font-weight:600;max-width:520px;margin:0 auto}
+  .word-chip{
+    display:inline-flex;align-items:center;gap:6px;margin:14px auto 0;padding:9px 16px;border-radius:999px;
+    background:#FFF1D6;border:1.5px solid #F0CE92;color:#7A4E09;font-weight:900;font-size:14px;cursor:pointer
+  }
+  .word-chip small{font-weight:800;color:#A2773A;text-transform:uppercase;font-size:10px}
+
+  .mini-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .mini{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);font-size:26px;text-align:left;cursor:pointer}
+  .mini span{font-size:15px;font-weight:900;color:var(--night);margin-top:4px}
+  .mini small{font-size:12px;font-weight:700;color:#7B8C99}
+
+  .line{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;border-radius:16px;background:#fff;border:1.5px solid var(--line);box-shadow:0 5px 0 rgba(14,42,71,.07);margin-bottom:8px;cursor:pointer}
+  .line-em{font-size:22px}
+  .line-t{font-size:17px;font-weight:900;color:var(--night)}
+  .line-en{font-size:11px;font-weight:800;color:#8B9BA8;text-transform:uppercase}
+  .line-spk{margin-left:auto;font-size:15px;opacity:.5}
+
+  .pcard{background:var(--card);border-radius:22px;padding:14px 16px;border:1px solid rgba(255,255,255,.9);box-shadow:var(--shadow);margin-bottom:12px}
+  .pcard-head{display:flex;align-items:center;gap:8px;font-weight:900;color:var(--night);font-size:15px;padding-bottom:8px;border-bottom:1px dashed var(--line);margin-bottom:8px}
+  .big-num{font-size:44px;font-weight:900;color:var(--night);line-height:1.1;margin-top:2px}
+  .big-num small{font-size:16px;color:#8B9BA8}
+  .bar{height:14px;border-radius:999px;background:rgba(14,42,71,.1);overflow:hidden;margin-top:10px}
+  .bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#F2A93B,#C4552D);width:0%}
+  .tbl-title{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#7B8C99;margin:16px 0 6px}
+  .notes{margin:8px 0 0;padding-left:18px;color:#4B6072;font-size:13px;font-weight:600;line-height:1.65}
+
+  .result{text-align:center;padding:26px 18px}
+  .big-stars{font-size:clamp(38px,10vw,58px);letter-spacing:6px;color:#E4D6BE;margin:6px 0 4px}
+  .big-stars b{color:#F2A93B;text-shadow:0 6px 0 rgba(217,134,26,.35);font-weight:400;display:inline-block}
+
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+  .conf{position:absolute;width:10px;height:14px;border-radius:3px;animation:fall linear forwards}
+  @keyframes fall{ 0%{transform:translate3d(0,0,0) rotate(0);opacity:1} 100%{transform:translate3d(var(--dx),105vh,0) rotate(720deg);opacity:.85} }
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:90;
+    background:var(--night);color:#fff;font-weight:900;font-size:14px;padding:13px 22px;border-radius:999px;
+    box-shadow:0 18px 36px -18px #000;
+  }
+</style>
+</head>
+<body>
+
+  <!-- reusable SVG symbol for waving cat -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="cat-hello-symbol" viewBox="0 0 120 120">
+      <rect x="62" y="6" width="54" height="30" rx="14" fill="#ffffff" style="stroke:var(--ink)" stroke-width="3"/>
+      <path d="M78 36 l-6 10 v-10 z" fill="#ffffff" style="stroke:var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+      <text x="89" y="26" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="12" font-weight="700" style="fill:var(--ink)">Hello</text>
+      <path d="M26 118 q0 -26 22 -26 q22 0 22 26 z" fill="#FF6B6B" style="stroke:var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M68 92 q18 -8 22 -26" fill="none" style="stroke:var(--ink)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M68 92 q18 -8 22 -26" fill="none" style="stroke:var(--accent)" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="92" cy="62" r="7" style="fill:var(--accent);stroke:var(--ink)" stroke-width="3"/>
+      <circle cx="48" cy="62" r="28" fill="#FFF1C9" style="stroke:var(--ink)" stroke-width="3"/>
+      <path d="M24 44 l-2 -20 l18 10 z" fill="#FFF1C9" style="stroke:var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M72 44 l2 -20 l-18 10 z" fill="#FFF1C9" style="stroke:var(--ink)" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M26 38 l-1 -10 l9 5 z" fill="#FFB3B3"/>
+      <path d="M70 38 l1 -10 l-9 5 z" fill="#FFB3B3"/>
+      <circle cx="39" cy="60" r="3.5" style="fill:var(--ink)"/>
+      <circle cx="57" cy="60" r="3.5" style="fill:var(--ink)"/>
+      <path d="M48 66 l-3 3 h6 z" fill="#FF8A8A" style="stroke:var(--ink)" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M48 72 q-5 5 -9 1" fill="none" style="stroke:var(--ink)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M48 72 q5 5 9 1" fill="none" style="stroke:var(--ink)" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+
+  <!-- ================= TOP BAR ================= -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" onclick="goHome()">
+        <span class="brand-badge">☀️</span>
+        <span class="brand-text">
+          <strong>Microwide Kids</strong>
+          <small>Namibian languages for kids</small>
+        </span>
+      </a>
+
+      <div class="top-right">
+        <nav class="nav">
+          <button onclick="goHome()">Home</button>
+          <button id="navBackBtn" class="hidden" onclick="goBack()">← Back</button>
+        </nav>
+
+        <div class="theme-picker" role="group" aria-label="Choose a colour theme">
+          <span class="lbl">Theme</span>
+          <button class="swatch" data-theme="purple" style="--sw:#A970FF" aria-label="Purple theme" aria-pressed="true" title="Purple"></button>
+          <button class="swatch" data-theme="pink" style="--sw:#FF9ED2" aria-label="Pink theme" aria-pressed="false" title="Pink"></button>
+          <button class="swatch" data-theme="blue" style="--sw:#7CC7FF" aria-label="Blue theme" aria-pressed="false" title="Blue"></button>
+          <button class="swatch" data-theme="yellow" style="--sw:#FFD93D" aria-label="Yellow theme" aria-pressed="false" title="Yellow"></button>
+        </div>
+
+        <div class="pill" aria-label="Stars collected"><span class="star-ico">★</span><span id="starTotal">0</span></div>
+        <button class="icon-btn" id="soundBtn" onclick="toggleGlobalSound()" aria-label="Toggle sound">🔊</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="wrap" id="mainContainer">
+    <!-- Landing content gets rendered here initially, switching to App modules dynamically -->
+  </main>
+
+  <!-- AI Assistant Chat Modal Window -->
+  <div id="aiModal" class="ai-modal hidden" onclick="toggleAiModal(false)">
+    <div class="ai-content" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <h3>🤖 Temba AI Buddy</h3>
+        <button class="icon-btn" style="width:32px;height:32px;font-size:14px" onclick="toggleAiModal(false)">✕</button>
+      </div>
+      <p style="margin:0;font-size:13px;color:#5C7285">Ask me any word or phrase in Oshikwanyama or Rukwangali!</p>
+      <div id="aiChatBox" class="ai-chat-box">
+        <div class="ai-msg">Molo! I am Temba, your AI buddy. Type a question or tap a quick question below!</div>
+      </div>
+      <div class="ai-chips">
+        <button class="ai-chip" onclick="askQuick('How do I say elephant?')">🐘 Elephant?</button>
+        <button class="ai-chip" onclick="askQuick('How do I say hello?')">👋 Hello?</button>
+        <button class="ai-chip" onclick="askQuick('Count to three')">🔢 Count to 3</button>
+        <button class="ai-chip" onclick="askQuick('Tell me thank you')">🙏 Thank you</button>
+      </div>
+      <div class="ai-input-row">
+        <input type="text" id="aiInput" class="ai-input" placeholder="Type what you want to learn..." onkeydown="if(event.key==='Enter') handleAiQuery()" />
+        <button class="ai-send" onclick="handleAiQuery()">Ask</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="fx"></div>
+
+<script>
+/* ============================================================
+   MICROWIDE KIDS — Integrated Landing Page & App Logic
+   ============================================================ */
+
+var KEY = "microwide-kids-v6";
+
+var LANGS = [
+  { id:"ruk", name:"Rukwangali", sub:"Kavango region", dot:"#C4552D", icon:"🌻", hello:"Moro" },
+  { id:"osh", name:"Oshikwanyama", sub:"Owambo / Oshana regions", dot:"#F2A93B", icon:"🌾", hello:"Wa lala po" }
+];
+
+var CONTENT = {
+  osh: {
+    days: [
+      ["Monday","Omaandaha"],["Tuesday","Etiyali"],["Wednesday","Etitatu"],["Thursday","Etine"],
+      ["Friday","Etitano"],["Saturday","Olyomakaya"],["Sunday","Osoondaha"]
+    ],
+    numbers: [
+      ["one","imwe"],["two","mbali"],["three","ndatu"],["four","ne"],["five","ntano"],
+      ["six","hamano"],["seven","heyali"],["eight","hetatu"],["nine","omugoyi"],["ten","omulongo"]
+    ],
+    animals: [
+      ["cow","ongombe","🐄"],["dog","ombwa","🐕"],["goat","oshikombo","🐐"],
+      ["elephant","ondjamba","🐘"],["lion","ongwe","🦁"]
+    ],
+    greetings: [
+      ["Hello","Wa lalapo","👋"],["Thank you","Tangi","🙏"],["Goodbye","Kala po nawa","🤗"],["Yes","Eeno","✅"]
+    ],
+    stories: [
+      {
+        id: 0, title: "Kuda and the Lost Calf", art: "🐐",
+        pages: [
+          { art:"🌅", en:"Kuda wakes up early. The golden sun rises over the hills.", localText:"Kuda ota penduka mangisa. Etango olyo ta li hupu komagulu.", word:"penduka", meaning:"wake up" },
+          { art:"🐐", en:"Near the big tree, one little calf is lost and calling.", localText:"Pepingo yomuti omunene, okaana koshongombe kamwe oka kanitha oikulila.", word:"imwe", meaning:"one" },
+          { art:"🐄", en:"Its mother, the cow, calls softly for her baby.", localText:"Nyina, ongombe, ota dhengele okaana kayo nondaka ombwanawa.", word:"ongombe", meaning:"cow" },
+          { art:"🌾", en:"Kuda leads the calf home safely. What a kind helper! Say thank you.", localText:"Kuda ota hakele okaana kegumbo nawa. Tangi unene komafano goye!", word:"tangi", meaning:"thank you" }
+        ],
+        quiz: { q:"How many calves did Kuda find?", opts:["imwe","mbali","ndatu"], a:0 }
+      }
+    ]
+  },
+  ruk: {
+    days: [
+      ["Monday","Ahamingena"],["Tuesday","Ahavali"],["Wednesday","Ahatatu"],["Thursday","Ahane"],
+      ["Friday","Ahatano"],["Saturday","Mapeu"],["Sunday","Siruwo"]
+    ],
+    numbers: [
+      ["one","yimwe"],["two","mbali"],["three","ntatu"],["four","ne"],["five","ntano"],
+      ["six","mbandu"],["seven","ntambo"],["eight","muntambo"],["nine","mbandumwe"],["ten","murongo"]
+    ],
+    animals: [
+      ["cow","ngombe","🐄"],["dog","mungwangwa","🐕"],["goat","sikombo","🐐"],
+      ["elephant","nzovu","🐘"],["lion","nyime","🦁"]
+    ],
+    greetings: [
+      ["Hello","Nawa yapo","👋"],["Thank you","Pandura","🙏"],["Goodbye","Karera nawa","🤗"],["Yes","Eeno","✅"]
+    ],
+    stories: [
+      {
+        id: 0, title: "Kuda and the Kavango River", art: "🌅",
+        pages: [
+          { art:"🌅", en:"Kuda wakes up early by the flowing Kavango river.", localText:"Kuda kora rutanau kouvali mosure zetu.", word:"rutanau", meaning:"morning" },
+          { art:"🐐", en:"Near the palm tree, a small baby goat is calling out.", localText:"Kapiyapo ka sikombo kaverere kuna kudira.", word:"sikombo", meaning:"goat" },
+          { art:"🐄", en:"The mother cow gently answers her little one.", localText:"Ngombe zina zakuhakera nawa.", word:"ngombe", meaning:"cow" },
+          { art:"🌾", en:"Kuda helps them reunite. Say thank you for helping!", localText:"Kuda kavamoneka. Pandura unene!", word:"pandura", meaning:"thank you" }
+        ],
+        quiz: { q:"What animal was lost near the tree?", opts:["sikombo","nzovu","nyime"], a:0 }
+      }
+    ]
+  }
+};
+
+var MODULES = [
+  { id:"days",      title:"Calendar Train", sub:"Days of the week", art:"🚂", tone:"gold",   game:"train" },
+  { id:"numbers",   title:"Number Safari",  sub:"Count 1 to 10",    art:"🦒", tone:"teal",   game:"count" },
+  { id:"animals",   title:"Bushveld Memory",sub:"Safari animals",   art:"🐘", tone:"terra",  game:"memory" },
+  { id:"greetings", title:"Hello Hut",      sub:"Greetings & thanks",art:"👋",tone:"blue",   game:"quiz" }
+];
+
+var S = { view:"landing", screen:"home", lang:"ruk", mod:null, sound:true, round:0, mistakes:0, page:0, storyId:0, storyPageIndex:0, finishId:null, finishTitle:"" };
+var P = loadProgress();
+
+function loadProgress(){
+  try { var raw = localStorage.getItem(KEY); if(raw){ var o = JSON.parse(raw); if(o && o.stars) return o; } } catch(e){}
+  return { stars:{} };
+}
+function saveProgress(){ try { localStorage.setItem(KEY, JSON.stringify(P)); } catch(e){} }
+function starsFor(modId){
+  var v = P.stars[modId + ":" + S.lang];
+  return typeof v === "number" ? v : 0;
+}
+function totalStars(){
+  var t = 0; for(var k in P.stars){ if(typeof P.stars[k]==="number") t += P.stars[k]; }
+  return t;
+}
+function L(){ return CONTENT[S.lang] || CONTENT.ruk; }
+function mod(){ for(var i=0;i<MODULES.length;i++){ if(MODULES[i].id===S.mod) return MODULES[i]; } return MODULES[0]; }
+function shuffle(a){ a = a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+/* ---------- Sound & Speech ---------- */
+function speak(text){
+  if(!S.sound) return;
+  try{
+    if(!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.82;
+    u.pitch = 1.1;
+    u.lang = S.lang === 'ruk' ? 'zu-ZA' : 'sw-KE';
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+function toggleGlobalSound(){
+  S.sound = !S.sound;
+  document.getElementById("soundBtn").textContent = S.sound ? "🔊" : "🔇";
+  toast(S.sound ? "Sound On" : "Sound Off");
+}
+
+/* ---------- AI Assistant Chat Logic ---------- */
+function toggleAiModal(show){
+  var modal = document.getElementById("aiModal");
+  if(show) modal.classList.remove("hidden");
+  else modal.classList.add("hidden");
+}
+function askQuick(txt){
+  document.getElementById("aiInput").value = txt;
+  handleAiQuery();
+}
+function handleAiQuery(){
+  var inputEl = document.getElementById("aiInput");
+  var q = inputEl.value.trim();
+  if(!q) return;
+  var chatBox = document.getElementById("aiChatBox");
+  chatBox.innerHTML += '<div class="ai-msg user">' + esc(q) + '</div>';
+  inputEl.value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  setTimeout(function(){
+    var reply = generateAiResponse(q);
+    chatBox.innerHTML += '<div class="ai-msg">' + esc(reply) + '</div>';
+    chatBox.scrollTop = chatBox.scrollHeight;
+    speak(reply);
+  }, 300);
+}
+function generateAiResponse(query){
+  var q = query.toLowerCase();
+  var langName = S.lang === 'osh' ? 'Oshikwanyama' : 'Rukwangali';
+  if(q.includes('elephant') || q.includes('nzovu') || q.includes('ondjamba')){
+    var word = S.lang === 'osh' ? 'Ondjamba 🐘' : 'Nzovu 🐘';
+    return 'In ' + langName + ', elephant is called "' + word + '". Click Sound to hear it!';
+  } else if(q.includes('hello') || q.includes('molo') || q.includes('moro') || q.includes('hi')){
+    var greeting = S.lang === 'osh' ? 'Wa lalapo 👋' : 'Moro / Nawa yapo 👋';
+    return 'Hello! In ' + langName + ', we greet by saying "' + greeting + '".';
+  } else if(q.includes('thank') || q.includes('tangi') || q.includes('pandura')){
+    var thanks = S.lang === 'osh' ? 'Tangi 🙏' : 'Pandura 🙏';
+    return 'Saying thank you is "' + thanks + '" in ' + langName + '!';
+  } else {
+    return 'Great question! Exploring new words everyday in ' + langName + ' makes learning super fun!';
+  }
+}
+
+function toast(msg){
+  var t = document.createElement("div");
+  t.className = "toast"; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 1400);
+}
+function confetti(){
+  var fx = document.getElementById("fx");
+  var colors = ["#F2A93B","#C4552D","#1F8A70","#2E6EA6","#6C4AB6","#FFD97D"];
+  for(var i=0;i<46;i++){
+    var d = document.createElement("div");
+    d.className = "conf";
+    d.style.left = (10 + Math.random()*80) + "%";
+    d.style.top = "-20px";
+    d.style.background = colors[Math.floor(Math.random()*colors.length)];
+    d.style.setProperty("--dx", (Math.random()*220-110) + "px");
+    d.style.animationDuration = (1.1 + Math.random()*0.9) + "s";
+    fx.appendChild(d);
+    (function(el){ setTimeout(function(){ el.remove(); }, 2400); })(d);
+  }
+}
+
+/* ================= RENDER MANAGER ================= */
+function render(){
+  document.getElementById("starTotal").textContent = totalStars();
+  var container = document.getElementById("mainContainer");
+  var navBack = document.getElementById("navBackBtn");
+
+  if(S.view === "landing"){
+    if(navBack) navBack.classList.add("hidden");
+    renderLanding(container);
+  } else {
+    if(navBack) navBack.classList.remove("hidden");
+    renderAppScreen(container);
+  }
+}
+
+function goHome(){
+  S.view = "landing";
+  render();
+}
+
+function goBack(){
+  if(S.screen === "home"){
+    goHome();
+  } else {
+    S.screen = "home";
+    render();
+  }
+}
+
+/* ---------- LANDING PAGE HTML ---------- */
+function renderLanding(container){
+  container.innerHTML = `
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="badge">🇳🇦 Learn a Namibian language today</p>
+        <h1>Hello, little <span class="hl">star!</span>
+          <svg class="cat-hello" viewBox="0 0 120 120" role="img" aria-label="Waving girl cat saying hello">
+            <use href="#cat-hello-symbol"></use>
+          </svg>
+        </h1>
+        <p class="sub">
+          Come and play with words! Pick a language below and learn to say
+          hello, count, sing and smile in <strong>Rukwangali</strong> or
+          <strong>Oshikwanyama</strong> — one happy word at a time.
+        </p>
+        <div class="greet-row">
+          <div class="greet-pill ruk" onclick="launchApp('ruk')">Moro <small>Rukwangali</small></div>
+          <div class="greet-pill oshi" onclick="launchApp('osh')">Wa lala po <small>Oshikwanyama</small></div>
+        </div>
+        <button class="btn" onclick="document.getElementById('languages').scrollIntoView({behavior:''})">Choose a language 🚀</button>
+      </div>
+
+      <div class="hero-art">
+        <div class="kids">
+          <svg class="kid" viewBox="0 0 100 132" role="img"><ellipse cx="50" cy="127" rx="33" ry="5" fill="#000" opacity=".12"/><path d="M17 130 Q17 86 50 86 Q83 86 83 130 Z" style="fill:var(--accent);stroke:var(--ink)" stroke-width="4" stroke-linejoin="round"/><circle cx="50" cy="44" r="31" fill="#2E1B10"/><circle cx="50" cy="50" r="24" fill="#8D5524"/><circle cx="41" cy="47" r="3.6" fill="#231409"/><circle cx="59" cy="47" r="3.6" fill="#231409"/><path d="M41 59 Q50 68 59 59" stroke="#231409" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg>
+          <svg class="kid" viewBox="0 0 100 132" role="img"><ellipse cx="50" cy="127" rx="33" ry="5" fill="#000" opacity=".12"/><path d="M17 130 Q17 86 50 86 Q83 86 83 130 Z" fill="#22C1A4" style="stroke:var(--ink)" stroke-width="4" stroke-linejoin="round"/><circle cx="27" cy="33" r="13" fill="#2E1B10"/><circle cx="73" cy="33" r="13" fill="#2E1B10"/><circle cx="50" cy="46" r="26" fill="#2E1B10"/><circle cx="50" cy="52" r="23" fill="#A0673A"/><circle cx="42" cy="49" r="3.6" fill="#231409"/><circle cx="58" cy="49" r="3.6" fill="#231409"/><path d="M42 61 Q50 69 58 61" stroke="#231409" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg>
+          <svg class="kid" viewBox="0 0 100 132" role="img"><ellipse cx="50" cy="127" rx="33" ry="5" fill="#000" opacity=".12"/><path d="M17 130 Q17 86 50 86 Q83 86 83 130 Z" fill="#9B6BFF" style="stroke:var(--ink)" stroke-width="4" stroke-linejoin="round"/><circle cx="50" cy="52" r="24" fill="#8D5524"/><path d="M26 48 A24 24 0 0 1 74 48 Q50 38 26 48 Z" fill="#FF6B6B" style="stroke:var(--ink)" stroke-width="4" stroke-linejoin="round"/><circle cx="50" cy="22" r="7" fill="#FF6B6B" style="stroke:var(--ink)" stroke-width="4"/><circle cx="42" cy="52" r="3.6" fill="#231409"/><circle cx="58" cy="52" r="3.6" fill="#231409"/><path d="M42 63 Q50 71 58 63" stroke="#231409" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- LANGUAGE SELECTION CARDS -->
+    <section class="section" id="languages">
+      <div class="section-head">
+        <h2>Which language shall we learn? 🌍</h2>
+        <p>Tap a card to jump right into the interactive app!</p>
+      </div>
+      <div class="lang-grid">
+        <button class="lang-card" onclick="launchApp('ruk')">
+          <span class="flag">🌻</span>
+          <h3>Rukwangali</h3>
+          <p class="region">Kavango region</p>
+          <span class="hello">“Moro” = Hello</span>
+        </button>
+        <button class="lang-card" onclick="launchApp('osh')">
+          <span class="flag">🌾</span>
+          <h3>Oshikwanyama</h3>
+          <p class="region">Owambo regions</p>
+          <span class="hello">“Wa lala po” = Hello</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- BIG HELLO BANNER -->
+    <section class="hello-banner">
+      <h2>Hello!
+        <svg class="cat-hello" viewBox="0 0 120 120" role="img" aria-label="Waving girl cat saying hello">
+          <use href="#cat-hello-symbol"></use>
+        </svg>
+      </h2>
+      <p>One little word, two beautiful Namibian languages.</p>
+      <div class="hello-lines">
+        <div class="hello-line" onclick="launchApp('ruk')">Moro <small>Rukwangali</small></div>
+        <div class="hello-line" onclick="launchApp('osh')">Wa lala po <small>Oshikwanyama</small></div>
+      </div>
+    </section>
+
+    <!-- ACTIVITIES / APP LAUNCHER CTA -->
+    <section class="activities-cta">
+      <div class="activities-card">
+        <div>
+          <h2>Ready for games & AI learning? 🎈</h2>
+          <p>Explore module lessons, train puzzles, memory cards, local stories, and Temba AI Buddy!</p>
+        </div>
+        <button class="btn" onclick="launchApp('osh')">Enter App & Games 🚀</button>
+      </div>
+    </section>
+
+    <footer>
+      <div class="foot-dots">🌞 🎈 🌻 🎈 🌞</div>
+      <p>Made with <strong>love</strong> for Namibian kids · <strong>Microwide Kids</strong></p>
+    </footer>
+  `;
+}
+
+function launchApp(langId){
+  S.lang = langId;
+  S.view = "app";
+  S.screen = "home";
+  render();
+}
+
+/* ---------- APP VIEWS RENDERER ---------- */
+function renderAppScreen(container){
+  if(S.screen === "home") renderAppHome(container);
+  else if(S.screen === "lesson") renderLesson(container);
+  else if(S.screen === "game") renderGame(container);
+  else if(S.screen === "storySelector") renderStorySelector(container);
+  else if(S.screen === "storyReader") renderStoryReader(container);
+  else if(S.screen === "dictionary") renderDictionary(container);
+  else if(S.screen === "parent") renderParent(container);
+  else if(S.screen === "result") renderResult(container);
+}
+
+function renderAppHome(container){
+  var langHtml = LANGS.map(function(l){
+    var on = (l.id === S.lang) ? " on" : "";
+    return '<button class="lang'+on+'" style="padding:10px 16px;border-radius:16px;background:#fff;border:2px solid var(--line);font-weight:900;cursor:pointer" onclick="setAppLang(\''+l.id+'\')">'
+      + l.icon + ' ' + esc(l.name)
+      + '</button>';
+  }).join("");
+
+  var modulesHtml = MODULES.map(function(m){
+    var st = starsFor(m.id);
+    var starStr = "";
+    for(var i=1;i<=3;i++){ starStr += (i <= st) ? '<b>★</b>' : '☆'; }
+    return '<button class="card" onclick="startMod(\''+m.id+'\')">'
+      + '<div class="blob b-'+m.tone+'">'+m.art+'</div>'
+      + '<div><h3>'+esc(m.title)+'</h3><p>'+esc(m.sub)+'</p></div>'
+      + '<div class="go"><span>Start Module →</span><div class="stars-mini">'+starStr+'</div></div>'
+      + '</button>';
+  }).join("");
+
+  container.innerHTML = '<div class="screen">'
+    + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">'
+    + '<h2 style="font-size:24px;color:var(--night)">Active Language:</h2>'
+    + '<div style="display:flex;gap:8px">'+langHtml+'</div>'
+    + '</div>'
+
+    + '<div class="ai-buddy-bar">'
+    + '<div class="ai-avatar">🤖</div>'
+    + '<div class="ai-info"><h4>Temba AI Learning Assistant</h4><p>Ask me how to pronounce local words & phrases!</p></div>'
+    + '<button class="ai-btn" onclick="toggleAiModal(true)">Chat with AI 💬</button>'
+    + '</div>'
+
+    + '<div class="grid">'+modulesHtml+'</div>'
+
+    + '<div style="margin-top:24px" class="mini-grid">'
+    + '<button class="mini" onclick="openScreen(\'storySelector\')">📖<span>Local Stories World</span><small>Read in Oshikwanyama & Rukwangali</small></button>'
+    + '<button class="mini" onclick="openScreen(\'dictionary\')">📚<span>Word Dictionary</span><small>Pronunciation & Vocabulary</small></button>'
+    + '<button class="mini" onclick="openScreen(\'parent\')">📊<span>Parents & Teachers</span><small>Progress Tracker</small></button>'
+    + '</div>'
+    + '</div>';
+}
+
+function setAppLang(id){
+  S.lang = id;
+  render();
+}
+
+function openScreen(screenName){
+  S.screen = screenName;
+  render();
+}
+
+function startMod(modId){
+  S.mod = modId;
+  S.page = 0;
+  S.screen = "lesson";
+  render();
+}
+
+function renderLesson(container){
+  var m = mod();
+  var list = L()[m.id];
+  if(S.page >= list.length) S.page = 0;
+  var item = list[S.page];
+  
+  var dots = list.map(function(_, i){ return '<i class="'+(i===S.page?'on':'')+'"></i>'; }).join("");
+  var art = item[2] || "⭐";
+  var word = item[1];
+  var en = item[0];
+
+  container.innerHTML = '<div class="screen">'
+    + '<div class="screen-head"><h2>'+esc(m.title)+' — Lesson</h2><div class="rounds">'+dots+'</div></div>'
+    + '<div class="panel flash">'
+    + '<div class="art">'+art+'</div>'
+    + '<div class="word">'+esc(word)+'</div>'
+    + '<div class="en">'+esc(en)+'</div>'
+    + '<div><button class="spk" onclick="speak(\''+esc(word)+'\')">🔊 Sound</button></div>'
+    + '</div>'
+    + '<div class="lesson-nav">'
+    + '<button class="btn-app" onclick="prevWord()">← Prev</button>'
+    + '<button class="btn-app primary" onclick="nextWord()">Next Word →</button>'
+    + '<button class="btn-app" onclick="startModGame()" style="margin-left:auto">Play Game 🎮</button>'
+    + '</div>'
+    + '</div>';
+}
+
+function nextWord(){ S.page++; render(); }
+function prevWord(){ S.page = Math.max(0, S.page - 1); render(); }
+
+function startModGame(){
+  S.screen = "game";
+  S.round = 0;
+  S.mistakes = 0;
+  var m = mod();
+  if(m.game === "train") initTrain();
+  else if(m.game === "count") initCount();
+  else if(m.game === "memory") initMemory();
+  else initQuiz();
+  render();
+}
+
+function renderGame(container){
+  var m = mod();
+  if(m.game === "train") renderTrainGame(container);
+  else if(m.game === "count") renderCountGame(container);
+  else if(m.game === "memory") renderMemoryGame(container);
+  else renderQuizGame(container);
+}
+
+/* Games Implementation */
+var trainState = { placed:[] };
+function initTrain(){ trainState.placed = []; }
+function renderTrainGame(container){
+  var list = L().days;
+  var trackHtml = list.map(function(item, i){
+    var p = trainState.placed[i];
+    return p ? '<div class="car done"><div><b>'+esc(p[1])+'</b></div><small>'+esc(p[0])+'</small></div>' : '<div class="car">'+(i+1)+'</div>';
+  }).join("");
+
+  var remaining = list.filter(function(item){ return !trainState.placed.some(function(p){ return p && p[1] === item[1]; }); });
+  var chipsHtml = shuffle(remaining).map(function(item){
+    return '<button class="chip" onclick="placeTrain(\''+esc(item[1])+'\')"><span>'+esc(item[1])+'</span><small>'+esc(item[0])+'</small></button>';
+  }).join("");
+
+  container.innerHTML = '<div class="screen"><div class="screen-head"><h2>Calendar Train Game</h2></div><div class="panel stage">'
+    + '<p class="hint">Tap the correct day in local language to build the week train!</p>'
+    + '<div class="track">'+trackHtml+'</div><div class="tray">'+chipsHtml+'</div></div></div>';
+}
+function placeTrain(word){
+  var list = L().days;
+  var expected = list[trainState.placed.length];
+  if(expected && expected[1] === word){
+    confetti();
+    trainState.placed.push(expected);
+    if(trainState.placed.length === list.length){
+      S.finishId = mod().id; S.finishTitle = mod().title; S.screen = "result";
+    }
+    render();
+  } else {
+    S.mistakes++;
+    toast("Try again!");
+  }
+}
+
+var countState = { target:0, opts:[] };
+function initCount(){
+  var list = L().numbers;
+  countState.target = Math.floor(Math.random()*list.length);
+  var correct = list[countState.target];
+  var choices = [correct];
+  while(choices.length < 3){
+    var r = list[Math.floor(Math.random()*list.length)];
+    if(!choices.some(function(c){ return c[1] === r[1]; })) choices.push(r);
+  }
+  countState.opts = shuffle(choices);
+}
+function renderCountGame(container){
+  var list = L().numbers;
+  var count = countState.target + 1;
+  var herdStr = ""; for(var i=0; i<count; i++) herdStr += "🦒 ";
+  var optsHtml = countState.opts.map(function(opt){
+    return '<button class="opt" onclick="answerCount(\''+esc(opt[1])+'\')">'+esc(opt[1])+'</button>';
+  }).join("");
+
+  container.innerHTML = '<div class="screen"><div class="screen-head"><h2>Number Safari</h2></div><div class="panel q">'
+    + '<div class="prompt">How many giraffes do you see? Tap the number word!</div>'
+    + '<div class="herd">'+herdStr+'</div><div class="opts">'+optsHtml+'</div></div></div>';
+}
+function answerCount(word){
+  var target = L().numbers[countState.target];
+  if(word === target[1]){
+    confetti(); S.round++;
+    if(S.round >= 3){ S.finishId = mod().id; S.finishTitle = mod().title; S.screen = "result"; }
+    else initCount();
+    render();
+  } else {
+    S.mistakes++; toast("Try again!");
+  }
+}
+
+var memState = { cards:[], flipped:[], matched:0 };
+function initMemory(){
+  var list = L().animals; var cards = [];
+  list.forEach(function(item, idx){
+    cards.push({ id:idx, type:"art", val:item[2], pairId:idx });
+    cards.push({ id:idx, type:"text", val:item[1], pairId:idx });
+  });
+  memState.cards = shuffle(cards).map(function(c, i){ return { uid:i, pairId:c.pairId, type:c.type, val:c.val, up:false, matched:false }; });
+  memState.flipped = []; memState.matched = 0;
+}
+function renderMemoryGame(container){
+  var cardsHtml = memState.cards.map(function(c){
+    var cls = "mem-card" + (c.up ? " up" : "") + (c.matched ? " matched" : "");
+    return '<button class="'+cls+'" onclick="flipMem('+c.uid+')"><div class="mem-inner"><div class="face back">🐾</div><div class="face front">'+esc(c.val)+'</div></div></button>';
+  }).join("");
+  container.innerHTML = '<div class="screen"><div class="screen-head"><h2>Bushveld Memory</h2></div><div class="panel"><div class="board">'+cardsHtml+'</div></div></div>';
+}
+function flipMem(uid){
+  var card = memState.cards.find(function(c){ return c.uid === uid; });
+  if(!card || card.up || card.matched || memState.flipped.length >= 2) return;
+  card.up = true; memState.flipped.push(card); render();
+  if(memState.flipped.length === 2){
+    var c1 = memState.flipped[0], c2 = memState.flipped[1];
+    if(c1.pairId === c2.pairId){
+      c1.matched = true; c2.matched = true; memState.matched += 2; memState.flipped = [];
+      if(memState.matched === memState.cards.length){
+        setTimeout(function(){ confetti(); S.finishId = mod().id; S.finishTitle = mod().title; S.screen = "result"; render(); }, 600);
+      }
+    } else {
+      setTimeout(function(){ c1.up = false; c2.up = false; memState.flipped = []; render(); }, 900);
+    }
+  }
+}
+
+var quizState = { opts:[] };
+function initQuiz(){
+  var list = L().greetings;
+  var item = list[S.round % list.length];
+  var choices = [item];
+  while(choices.length < 3){
+    var r = list[Math.floor(Math.random()*list.length)];
+    if(!choices.some(function(c){ return c[1] === r[1]; })) choices.push(r);
+  }
+  quizState.opts = shuffle(choices);
+}
+function renderQuizGame(container){
+  var item = L().greetings[S.round % L().greetings.length];
+  var optsHtml = quizState.opts.map(function(opt){
+    return '<button class="opt" onclick="answerQuiz(\''+esc(opt[1])+'\')">'+esc(opt[1])+'</button>';
+  }).join("");
+  container.innerHTML = '<div class="screen"><div class="screen-head"><h2>Hello Hut Quiz</h2></div><div class="panel q">'
+    + '<div class="prompt">What is the local word for:</div><div class="big-word">'+esc(item[0])+' '+item[2]+'</div>'
+    + '<div class="opts" style="margin-top:20px">'+optsHtml+'</div></div></div>';
+}
+function answerQuiz(word){
+  var item = L().greetings[S.round % L().greetings.length];
+  if(word === item[1]){
+    confetti(); S.round++;
+    if(S.round >= 3){ S.finishId = mod().id; S.finishTitle = mod().title; S.screen = "result"; }
+    else initQuiz();
+    render();
+  } else {
+    S.mistakes++; toast("Try again!");
+  }
+}
+
+/* Stories */
+function renderStorySelector(container){
+  var stories = L().stories;
+  var cards = stories.map(function(s){
+    return '<button class="story-card" onclick="openStory('+s.id+')"><div class="story-thumb">'+s.art+'</div><div><h3>'+esc(s.title)+'</h3><p>'+s.pages.length+' immersive pages</p></div></button>';
+  }).join("");
+  container.innerHTML = '<div class="screen"><div class="screen-head"><h2>📖 Local Stories World</h2></div><div class="story-list-grid">'+cards+'</div></div>';
+}
+function openStory(id){ S.storyId = id; S.storyPageIndex = 0; S.screen = "storyReader"; render(); }
+function renderStoryReader(container){
+  var story = L().stories[S.storyId] || L().stories[0];
+  if(S.storyPageIndex >= story.pages.length){
+    container.innerHTML = '<div class="screen"><div class="panel result"><h2>Story Completed! 🎉</h2><button class="btn-app primary" onclick="openScreen(\'storySelector\')">Back to Stories</button></div></div>';
+    return;
+  }
+  var page = story.pages[S.storyPageIndex];
+  container.innerHTML = '<div class="screen"><div class="screen-head"><h2>'+esc(story.title)+'</h2></div><div class="panel" style="text-align:center">'
+    + '<div class="story-art">'+page.art+'</div>'
+    + '<p class="story-text" style="font-style:italic;color:var(--deep);margin-bottom:8px">"'+esc(page.localText)+'"</p>'
+    + '<p class="story-text" style="font-size:15px;color:var(--ink-soft)">'+esc(page.en)+'</p>'
+    + '<div style="margin-top:14px"><button class="spk" onclick="speak(\''+esc(page.localText)+'\')">🔊 Sound</button></div>'
+    + '</div><div class="lesson-nav"><button class="btn-app primary" onclick="nextStoryPage()">Next Page →</button></div></div>';
+}
+function nextStoryPage(){ S.storyPageIndex++; render(); }
+
+/* Dictionary & Parent dashboard */
+function renderDictionary(container){
+  var d = L();
+  var cats = [{ t:"Greetings", i:d.greetings }, { t:"Animals", i:d.animals }, { t:"Numbers", i:d.numbers }];
+  var html = cats.map(function(c){
+    var lines = c.i.map(function(it){
+      return '<button class="line" onclick="speak(\''+esc(it[1])+'\')"><span class="line-em">'+(it[2]||'💬')+'</span><div><div class="line-t">'+esc(it[1])+'</div><div class="line-en">'+esc(it[0])+'</div></div><span class="line-spk">🔊</span></button>';
+    }).join("");
+    return '<div class="tbl-title">'+c.t+'</div>'+lines;
+  }).join("");
+  container.innerHTML = '<div class="screen"><div class="screen-head"><h2>Word Dictionary</h2></div><div class="panel">'+html+'</div></div>';
+}
+
+function renderParent(container){
+  var total = totalStars();
+  container.innerHTML = '<div class="screen"><div class="screen-head"><h2>Parent Dashboard</h2></div><div class="panel">'
+    + '<div class="pcard"><div class="pcard-head">Overall Progress</div><div class="big-num">'+total+' <small>stars earned</small></div><div class="bar"><i style="width:'+Math.min(100,(total/15)*100)+'%"></i></div></div>'
+    + '<p class="notes">Microwide Kids helps children learn local Namibian languages safely offline.</p></div></div>';
+}
+
+function renderResult(container){
+  var stars = S.mistakes === 0 ? 3 : (S.mistakes <= 2 ? 2 : 1);
+  var starStr = ""; for(var i=1;i<=3;i++){ starStr += (i <= stars) ? '<b>★</b>' : '☆'; }
+  if(S.finishId){ P.stars[S.finishId + ":" + S.lang] = Math.max(starsFor(S.finishId), stars); saveProgress(); }
+  container.innerHTML = '<div class="screen"><div class="panel result"><div class="big-stars">'+starStr+'</div>'
+    + '<h2>Awesome Job! 🎉</h2><p>You completed '+esc(S.finishTitle)+'!</p>'
+    + '<button class="btn-app primary" onclick="openScreen(\'home\')">Back to Modules 🏠</button></div></div>';
+  confetti();
+}
+
+/* ---------- THEME SWITCHER LOGIC ---------- */
+const root = document.documentElement;
+const swatches = document.querySelectorAll('.swatch');
+
+function setTheme(theme){
+  root.setAttribute('data-theme', theme);
+  swatches.forEach(s => s.setAttribute('aria-pressed', String(s.dataset.theme === theme)));
+  try { localStorage.setItem('microwide-theme', theme); } catch(e){}
+}
+
+swatches.forEach(sw => {
+  sw.addEventListener('click', () => setTheme(sw.dataset.theme));
+});
+
+try {
+  const saved = localStorage.getItem('microwide-theme');
+  if (saved) setTheme(saved);
+} catch(e){}
+
+// Initial load
+window.onload = function(){
+  render();
+};
+</script>
+</body>
+</html>
